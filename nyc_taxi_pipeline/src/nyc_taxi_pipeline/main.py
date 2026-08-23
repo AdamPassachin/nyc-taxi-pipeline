@@ -1,15 +1,22 @@
 from pyspark.sql import SparkSession
 from nyc_taxi_pipeline.bronze.ingest_bronze import ingest_bronze
+import argparse
 
 # Creating Spark session
 spark = SparkSession.builder.appName("nyc-taxi-pipeline").getOrCreate()
-raw_path = "/Volumes/nyc_taxi/bronze/raw_landing/yellow_taxi/year=2026/month=01"
 
 def main():
     """
     This function orchestrates the scripts.
     """
-    ingest_bronze(spark,raw_path)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--catalog', required=True)
+    parser.add_argument('--raw_path', required=True)
+    args = parser.parse_args()
+    catalog = args.catalog
+    raw_path = args.raw_path
+    
+    ingest_bronze(spark,catalog,raw_path)
 
 
 

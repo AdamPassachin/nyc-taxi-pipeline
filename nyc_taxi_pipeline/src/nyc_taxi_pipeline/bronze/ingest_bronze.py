@@ -1,11 +1,12 @@
 from pyspark.sql import functions as F
 
-def ingest_bronze(spark, path : str):
+def ingest_bronze(spark, catalog, path):
     """
     Function responsible for transferring raw data from source to bronze delta table
     Args:
         spark - SparkSession object
         path - Raw path in ADLS storage
+        catalog - Unity Catalog
     """
 
     print(f"Reading files at {path}...")
@@ -20,4 +21,4 @@ def ingest_bronze(spark, path : str):
 
     )
     print("Writing raw files to bronze...")
-    ts_df.write.mode('append').format('delta').saveAsTable('nyc_taxi.bronze.yellow_taxi_trips')
+    ts_df.write.mode('append').format('delta').saveAsTable(f'{catalog}.bronze.yellow_taxi_trips')

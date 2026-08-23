@@ -16,7 +16,7 @@ artifacts:
 variables:
   catalog:
     description: The catalog to use
-  schema:
+  raw_path:
     description: The schema to use
 
 targets:
@@ -30,8 +30,8 @@ targets:
     workspace:
       host: https://adb-7405607790621480.0.azuredatabricks.net
     variables:
-      catalog: workspace
-      schema: ${workspace.current_user.short_name}
+      catalog: nyc_taxi_dev
+      raw_path: /Volumes/nyc_taxi_dev/bronze/raw_landing
   prod:
     mode: production
     workspace:
@@ -39,8 +39,8 @@ targets:
       # We explicitly deploy to /Workspace/Users/adampassachin@hotmail.com to make sure we only have a single copy.
       root_path: /Workspace/Users/adampassachin@hotmail.com/.bundle/${bundle.name}/${bundle.target}
     variables:
-      catalog: workspace
-      schema: prod
+      catalog: nyc_taxi
+      raw_path: /Volumes/nyc_taxi/bronze/raw_landing
     permissions:
       - user_name: adampassachin@hotmail.com
         level: CAN_MANAGE

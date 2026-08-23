@@ -1,0 +1,23 @@
+resources:
+  jobs:
+    bronze_ingestion_job:
+      name: nyc_taxi_bronze_ingestion
+
+      tasks:
+        - task_key: ingest_bronze
+
+          python_wheel_task:
+            package_name: nyc_taxi_pipeline
+            entry_point: main
+            named_parameters:
+              catalog: ${var.catalog}
+              raw_path: ${var.raw_path}
+
+          environment_key: default
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
+            dependencies:
+              - ../dist/*.whl
