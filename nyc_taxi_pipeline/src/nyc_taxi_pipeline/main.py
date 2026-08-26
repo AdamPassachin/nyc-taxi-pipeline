@@ -1,9 +1,10 @@
-from pyspark.sql import SparkSession
+from databricks.connect import DatabricksSession
 from nyc_taxi_pipeline.bronze.ingest_bronze import ingest_bronze
+from nyc_taxi_pipeline.silver.ingest_silver import ingest_silver
 import argparse
 
 # Creating Spark session
-spark = SparkSession.builder.appName("nyc-taxi-pipeline").getOrCreate()
+spark = DatabricksSession.builder.profile("azure-dev").serverless().getOrCreate()
 
 def main():
     """
@@ -19,6 +20,7 @@ def main():
     checkpoint_path = args.checkpoint_path
     
     ingest_bronze(spark,catalog,raw_path,checkpoint_path)
+    ingest_silver(spark, catalog)
 
 
 
