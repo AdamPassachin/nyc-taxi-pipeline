@@ -18,6 +18,8 @@ variables:
     description: The catalog to use
   raw_path:
     description: The schema to use
+  checkpoint_path:
+    description: The chekpoint to use for AutoLoader
 
 targets:
   dev:
@@ -32,6 +34,7 @@ targets:
     variables:
       catalog: nyc_taxi_dev
       raw_path: /Volumes/nyc_taxi_dev/bronze/raw_landing
+      checkpoint_path: /Volumes/nyc_taxi_dev/bronze/checkpoints_bronze
   prod:
     mode: production
     workspace:

@@ -12,6 +12,7 @@ resources:
             named_parameters:
               catalog: ${var.catalog}
               raw_path: ${var.raw_path}
+              checkpoint_path: ${var.checkpoint_path}
 
           environment_key: default
 

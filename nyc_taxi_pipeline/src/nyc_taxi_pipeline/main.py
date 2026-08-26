@@ -12,11 +12,13 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--catalog', required=True)
     parser.add_argument('--raw_path', required=True)
+    parser.add_argument('--checkpoint_path', required=True)
     args = parser.parse_args()
     catalog = args.catalog
     raw_path = args.raw_path
+    checkpoint_path = args.checkpoint_path
     
-    ingest_bronze(spark,catalog,raw_path)
+    ingest_bronze(spark,catalog,raw_path,checkpoint_path)
 
 
 
