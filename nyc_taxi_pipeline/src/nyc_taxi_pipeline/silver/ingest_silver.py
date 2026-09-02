@@ -9,7 +9,7 @@ def ingest_silver(spark, catalog, bronze_to_silver_checkpoint, silver_quarantine
       bronze_to_silver_checkpoint - Checkpoint used for the delta streaming to load from bronze to silver
       silver_quarantine_checkpoint - Checkpoint used for the delta streaming to load from bronze to quarantine
     """
-    print(f"Reading data from {catalog}.bronze.yellow_taxi_trips")
+    print(f"Reading data from {catalog}.bronze.yellow_taxi_trips...")
     df = (
         spark.readStream
         .option("skipChangeCommits", "true")
@@ -32,7 +32,7 @@ def ingest_silver(spark, catalog, bronze_to_silver_checkpoint, silver_quarantine
         df.filter((F.col("duration_minutes") < 0) | (F.col("duration_minutes") > 360))
     )
 
-    print(f"Ingesting data to {catalog}.silver.yellow_taxi_trips")
+    print(f"Ingesting data to {catalog}.silver.yellow_taxi_trips...")
     silver_data = (
     valid_df.writeStream
     .trigger(availableNow=True)
@@ -40,7 +40,7 @@ def ingest_silver(spark, catalog, bronze_to_silver_checkpoint, silver_quarantine
     .toTable(f'{catalog}.silver.yellow_taxi_trips')
     )
 
-    print(f"Ingesting quarantine data into {catalog}.silver.quarantine_trips")
+    print(f"Ingesting quarantine data into {catalog}.silver.quarantine_trips...")
     quarantine_data = (
     quarantine_df.writeStream
     .trigger(availableNow = True)

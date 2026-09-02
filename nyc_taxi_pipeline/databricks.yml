@@ -19,11 +19,13 @@ variables:
   raw_path:
     description: The raw landing path
   raw_to_bronze_checkpoint:
-    description: The checkpoint to use for AutoLoader raw to bronze
+    description: The checkpoint to use for Delta Streaming raw to bronze
   bronze_to_silver_checkpoint:
     description:  The checkpoint to use for Delta Streaming bronze to silver
   silver_quarantine_checkpoint:
     description:  The checkpoint to use for Delta Streaming bronze to quarantine
+  raw_schema:
+    description: The schema for AutoLoader in bronze ingestion
   
 
 targets:
@@ -39,6 +41,7 @@ targets:
     variables:
       catalog: nyc_taxi_dev
       raw_path: /Volumes/nyc_taxi_dev/bronze/raw_landing
+      raw_schema: /Volumes/nyc_taxi_dev/bronze/raw_schema
       raw_to_bronze_checkpoint: /Volumes/nyc_taxi_dev/bronze/raw_to_bronze
       bronze_to_silver_checkpoint: /Volumes/nyc_taxi_dev/silver/bronze_to_silver
       silver_quarantine_checkpoint: /Volumes/nyc_taxi_dev/silver/silver_quarantine
