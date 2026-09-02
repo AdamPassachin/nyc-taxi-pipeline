@@ -1,10 +1,10 @@
 resources:
   jobs:
-    bronze_ingestion_job:
-      name: nyc_taxi_bronze_ingestion
+    nyc_taxi_job:
+      name: nyc_taxi_job
 
       tasks:
-        - task_key: ingest_bronze
+        - task_key: nyc_taxi_task
 
           python_wheel_task:
             package_name: nyc_taxi_pipeline
@@ -12,13 +12,17 @@ resources:
             named_parameters:
               catalog: ${var.catalog}
               raw_path: ${var.raw_path}
-              checkpoint_path: ${var.checkpoint_path}
+              raw_schema: ${var.raw_schema}
+              raw_to_bronze_checkpoint: ${var.raw_to_bronze_checkpoint}
+              bronze_to_silver_checkpoint: ${var.bronze_to_silver_checkpoint}
+              silver_quarantine_checkpoint: ${var.silver_quarantine_checkpoint}
+              
 
           environment_key: default
 
       environments:
         - environment_key: default
           spec:
-            environment_version: "2"
+            environment_version: "4"
             dependencies:
               - ../dist/*.whl
