@@ -27,9 +27,10 @@ def ingest_silver(spark, catalog, bronze_to_silver_checkpoint, silver_quarantine
         df.filter((F.col("duration_minutes") >= 0) & (F.col("duration_minutes") <= 360))
     )
 
-    # Quarantine invalid rows
+    # Quarantine rows with invalid duration
     quarantine_df = (
         df.filter((F.col("duration_minutes") < 0) | (F.col("duration_minutes") > 360))
+        .withColumn("rejection_reason", F.lit("duration is not valid"))
     )
 
     print(f"Ingesting data to {catalog}.silver.yellow_taxi_trips...")
