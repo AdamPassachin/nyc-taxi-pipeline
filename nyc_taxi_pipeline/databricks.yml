@@ -17,9 +17,14 @@ variables:
   catalog:
     description: The catalog to use
   raw_path:
-    description: The schema to use
-  checkpoint_path:
-    description: The chekpoint to use for AutoLoader
+    description: The raw landing path
+  raw_to_bronze_checkpoint:
+    description: The checkpoint to use for AutoLoader raw to bronze
+  bronze_to_silver_checkpoint:
+    description:  The checkpoint to use for Delta Streaming bronze to silver
+  silver_quarantine_checkpoint:
+    description:  The checkpoint to use for Delta Streaming bronze to quarantine
+  
 
 targets:
   dev:
@@ -34,7 +39,9 @@ targets:
     variables:
       catalog: nyc_taxi_dev
       raw_path: /Volumes/nyc_taxi_dev/bronze/raw_landing
-      checkpoint_path: /Volumes/nyc_taxi_dev/bronze/checkpoints_bronze
+      raw_to_bronze_checkpoint: /Volumes/nyc_taxi_dev/bronze/raw_to_bronze
+      bronze_to_silver_checkpoint: /Volumes/nyc_taxi_dev/silver/bronze_to_silver
+      silver_quarantine_checkpoint: /Volumes/nyc_taxi_dev/silver/silver_quarantine
   prod:
     mode: production
     workspace:

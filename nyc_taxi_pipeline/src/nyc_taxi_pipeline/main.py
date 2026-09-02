@@ -13,14 +13,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--catalog', required=True)
     parser.add_argument('--raw_path', required=True)
-    parser.add_argument('--checkpoint_path', required=True)
+    parser.add_argument('--raw_to_bronze_checkpoint', required=True)
+    parser.add_argument('--bronze_to_silver_checkpoint', required=True)
+    parser.add_argument('--silver_quarantine_checkpoint', required=True)
     args = parser.parse_args()
     catalog = args.catalog
     raw_path = args.raw_path
-    checkpoint_path = args.checkpoint_path
+    raw_to_bronze_checkpoint = args.raw_to_bronze_checkpoint
+    bronze_to_silver_checkpoint = args.bronze_to_silver_checkpoint
+    silver_quarantine_checkpoint = args.silver_quarantine_checkpoint
     
-    ingest_bronze(spark,catalog,raw_path,checkpoint_path)
-    ingest_silver(spark, catalog)
+    ingest_bronze(spark,catalog,raw_path,raw_to_bronze_checkpoint)
+    ingest_silver(spark, catalog, bronze_to_silver_checkpoint,silver_quarantine_checkpoint)
 
 
 
