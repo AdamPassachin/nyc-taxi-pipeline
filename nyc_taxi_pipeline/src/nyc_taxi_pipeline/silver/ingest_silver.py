@@ -24,7 +24,7 @@ def ingest_silver(spark, catalog, bronze_to_silver_checkpoint, silver_quarantine
 
     # Keep only rows with valid duration
     valid_df = (
-        df.filter((F.col("duration_minutes") > 0) & (F.col("duration_minutes") < 360))
+        df.filter((F.col("duration_minutes") >= 0) & (F.col("duration_minutes") <= 360))
     )
 
     # Quarantine invalid rows
