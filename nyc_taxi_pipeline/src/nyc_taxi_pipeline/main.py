@@ -1,6 +1,7 @@
 from databricks.connect import DatabricksSession
 from nyc_taxi_pipeline.bronze.ingest_bronze import ingest_bronze
 from nyc_taxi_pipeline.silver.ingest_silver import ingest_silver
+from nyc_taxi_pipeline.gold.build_dim_date import build_dim_date
 import argparse
 
 # Creating Spark session
@@ -27,6 +28,7 @@ def main():
     
     ingest_bronze(spark,catalog,raw_path,raw_schema,raw_to_bronze_checkpoint)
     ingest_silver(spark, catalog, bronze_to_silver_checkpoint,silver_quarantine_checkpoint)
+    build_dim_date(spark,catalog)
 
 
 
