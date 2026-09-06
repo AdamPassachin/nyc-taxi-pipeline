@@ -1,4 +1,5 @@
 from databricks.connect import DatabricksSession
+from pyspark.sql import functions as F
 
 spark = DatabricksSession.builder.profile("azure-dev").serverless().getOrCreate()
 def build_fact_taxi_trips(spark,catalog):
@@ -37,5 +38,10 @@ def build_fact_taxi_trips(spark,catalog):
         .withColumnRenamed('RatecodeID','rate_code_key')
         .withColumnRenamed('payment_type_key','payment_type_key')
     )
-    df.show()
+
+    df = (
+        df.withColumn('tpep_pickup_datetime', F.date_format('tpep_pickup_datetime','yyyyMMdd'))
+        .withColumn('tpep_dropoff_datetime', F.date_format('tpep_dropoff_datetime','yyyyMMdd'))
+    )
+
 build_fact_taxi_trips(spark,'nyc_taxi_dev')
