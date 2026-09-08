@@ -5,6 +5,7 @@ from nyc_taxi_pipeline.gold.build_dim_date import build_dim_date
 from nyc_taxi_pipeline.gold.build_dim_location import build_dim_location
 from nyc_taxi_pipeline.gold.build_dim_payment_type import build_dim_payment_type
 from nyc_taxi_pipeline.gold.build_dim_rate_code import build_dim_rate_code
+from nyc_taxi_pipeline.gold.build_fact_taxi_trips import build_fact_taxi_trips
 import argparse
 
 # Creating Spark session
@@ -39,6 +40,7 @@ def main():
         build_dim_payment_type(spark,catalog)
     if not spark.catalog.tableExists(f'{catalog}.gold.dim_rate_code'):
             build_dim_rate_code(spark,catalog)
+    build_fact_taxi_trips(spark,catalog)
 
 
 
