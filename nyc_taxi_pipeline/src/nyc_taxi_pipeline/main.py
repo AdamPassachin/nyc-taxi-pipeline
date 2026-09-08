@@ -8,13 +8,12 @@ from nyc_taxi_pipeline.gold.build_dim_rate_code import build_dim_rate_code
 from nyc_taxi_pipeline.gold.build_fact_taxi_trips import build_fact_taxi_trips
 import argparse
 
-# Creating Spark session
-spark = DatabricksSession.builder.profile("azure-dev").serverless().getOrCreate()
-
 def main():
     """
     This function orchestrates the scripts.
     """
+    spark = DatabricksSession.builder.getOrCreate()
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--catalog', required=True)
     parser.add_argument('--raw_path', required=True)
@@ -39,7 +38,7 @@ def main():
     if not spark.catalog.tableExists(f'{catalog}.gold.dim_payment_type'):
         build_dim_payment_type(spark,catalog)
     if not spark.catalog.tableExists(f'{catalog}.gold.dim_rate_code'):
-            build_dim_rate_code(spark,catalog)
+        build_dim_rate_code(spark,catalog)
     build_fact_taxi_trips(spark,catalog)
 
 
